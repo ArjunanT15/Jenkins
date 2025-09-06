@@ -1,35 +1,19 @@
 pipeline {
-    agent none   // disable global agent
+    agent {
+        docker { image 'node:16-alpine' }
+    }
 
     stages {
-        stage('Hello World with Node') {
-            agent {
-                docker { image 'node:16-alpine' }
-            }
+        stage('Hello World') {
             steps {
-                // Hello World using Node
-                sh 'echo "console.log(\\"Hello, World from Node.js!\\")" > app.js'
+                sh 'echo "console.log(\\"Hello, World!\\")" > app.js'
                 sh 'node app.js'
             }
         }
 
-        stage('Install NPM Package') {
-            agent {
-                docker { image 'node:16-alpine' }
-            }
+        stage('Check NPM') {
             steps {
-                sh 'npm init -y'        // create package.json
-                sh 'npm install lodash' // install a sample package
-            }
-        }
-
-        stage('Verify Node & NPM') {
-            agent {
-                docker { image 'node:16-alpine' }
-            }
-            steps {
-                sh 'node --version'
-                sh 'npm --version'
+                sh 'npm -v'
             }
         }
     }
