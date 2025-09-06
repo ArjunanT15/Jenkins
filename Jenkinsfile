@@ -16,5 +16,12 @@ pipeline {
                 sh 'npm -v'
             }
         }
+          stage('Say Hello') {
+            steps {
+                sh 'echo "Hello from Jenkins & Node.js!"'
+                sh 'node -v'
+                sh 'npm -v'
+            }
+        }
     }
 }
